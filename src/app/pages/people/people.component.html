@@ -1,0 +1,7 @@
+<div>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Search..." (change)="search()" [(ngModel)]="searchText">
+      </mat-form-field>
+    <app-table [columnNames]="peopleColumns" [data]="peoples" (deleteButtonFunction)="deletePeople($event)"></app-table>
+</div>
