@@ -1,0 +1,37 @@
+<div>
+    <div class="content">
+        <mat-card *ngIf="user" class="user-card">
+            <mat-card-header>
+                <mat-card-title>{{user.username}}</mat-card-title>
+            </mat-card-header>
+            <br>
+            <br>
+            <mat-card-content>
+                <img mat-card-image src="https://random.imagecdn.app/500/150" alt="">
+                <p>
+                    Name: {{user.name}}
+                </p>
+                <hr>
+                <p>
+                    Email: {{user.email}}
+                </p>
+                <hr>
+                <p>
+                    Phone: {{user.phone}}
+                </p>
+                <hr>
+                <p>
+                    Website: {{user.website}}
+                </p>
+                <hr>
+            </mat-card-content>
+        </mat-card>
+        <div class="posts">
+            <app-user-posts *ngIf="user" [user]="user" (changeCurrentPostEvent)="changeCurrentPost($event)">
+            </app-user-posts>
+        </div>
+    </div>
+    <div class="comments">
+        <app-user-post-comments *ngIf="currentPost" [post]="currentPost"></app-user-post-comments>
+    </div>
+</div>

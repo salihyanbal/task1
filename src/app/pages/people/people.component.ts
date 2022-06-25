@@ -1,55 +1,65 @@
+import { ResponseListModel } from './../../models/responseListModel';
+import { PageEvent } from '@angular/material/paginator';
+import { PeopleService } from './../../services/starwars/people.service';
 import { Component, OnInit } from '@angular/core';
-import { Character } from 'src/app/models/character';
-import { PeopleServiceService } from 'src/app/services/starwars/people-service.service';
+import { People } from 'src/app/models/people';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
-  styleUrls: ['./people.component.scss']
+  styleUrls: ['./people.component.scss'],
 })
 export class PeopleComponent implements OnInit {
-
-  initialPeoples: Character[] = [];
-  peoples: Character[] = [];
+  peopleResponseList: ResponseListModel<People>;
+  initialPeoples: People[] = [];
+  peoples: People[] = [];
   peopleColumns: string[] = [];
-  searchText: string = "";
+  searchText: string = '';
 
-  constructor(private peopleService: PeopleServiceService) { }
+  constructor(private peopleService: PeopleService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getPeoples();
+    this.getPeoplesByPage(1);
   }
 
-  getPeoples(){
-    this.peopleService.getPeoples().subscribe((response) => {
-      this.initialPeoples = response.results
-      this.peoples = response.results
-      this.peopleColumns.push("delete")
-      this.peopleColumns.push("update")
-      Object.keys(response.results[0]).forEach(key =>{
-        this.peopleColumns.push(key)
-      })
-      
-    })
+  getPeoplesByPage(page: number) {
+    this.peopleService.getPeoplesByPage(page).subscribe((response) => {
+      this.peopleColumns = [];
+      this.peopleResponseList = response;
+      this.initialPeoples = response.results;
+      this.peoples = response.results;
+      this.peopleColumns.push('delete');
+      this.peopleColumns.push('update');
+      Object.keys(response.results[0]).forEach((key) => {
+        this.peopleColumns.push(key);
+      });
+    });
   }
 
-  deletePeople(people: Character){
-    console.log(people)
-    this.peoples=this.peoples.filter(x => x.url !== people.url)
+  deletePeople(people: People) {
+    this.peoples = this.peoples.filter((x) => x.url !== people.url);
   }
 
-  updatePeople(people:Character){
+  updatePeople(people: People) {}
 
-  }
-
-  search(){
-    if(this.searchText == null || this.searchText == ""){
-      this.peoples = this.initialPeoples
+  search() {
+    if (this.searchText == null || this.searchText == '') {
+      this.peoples = this.initialPeoples;
     }
-    this.peoples = this.peoples.filter(x => {
+    this.peoples = this.peoples.filter((x) => {
       return x.name.toLowerCase().includes(this.searchText.toLowerCase());
-    })
-    console.log(this.peoples)
+    });
+    console.log(this.peoples);
   }
 
+  routeToDetails(people: People) {
+    let peopleSplited = people.url.split('/');
+    let peopleId = peopleSplited[peopleSplited.length - 2];
+    this.router.navigate(['/peopledetails/' + peopleId]);
+  }
+
+  paginate(pageEvent: PageEvent) {
+    this.getPeoplesByPage(pageEvent.pageIndex + 1);
+  }
 }

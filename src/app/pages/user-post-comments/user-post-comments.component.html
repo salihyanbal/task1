@@ -1,0 +1,2 @@
+<app-table [columnNames]="commentColumns" [data]="commentsToSend" [paginationCount]="comments.length"
+    (paginationFunction)="paginateComments($event)"></app-table>

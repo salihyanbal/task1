@@ -1,7 +1,9 @@
-<div>
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Search</mat-label>
-        <input matInput placeholder="Search..." (change)="search()" [(ngModel)]="searchText">
-      </mat-form-field>
-    <app-table [columnNames]="peopleColumns" [data]="peoples" (deleteButtonFunction)="deletePeople($event)"></app-table>
+<div *ngIf="peopleResponseList">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search..." (change)="search()" [(ngModel)]="searchText">
+  </mat-form-field>
+  <app-table [columnNames]="peopleColumns" [data]="peoples" [paginationCount]="peopleResponseList.count"
+    (deleteButtonFunction)="deletePeople($event)" (rowClickFunction)="routeToDetails($event)"
+    (paginationFunction)="paginate($event)"></app-table>
 </div>

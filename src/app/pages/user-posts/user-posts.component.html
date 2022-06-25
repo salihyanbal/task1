@@ -1,0 +1,2 @@
+<app-table [columnNames]="postColumns" [data]="postsToSend" [paginationCount]="posts.length"
+    (paginationFunction)="paginatePosts($event)" (rowClickFunction)="changeCurrentPost($event)"></app-table>

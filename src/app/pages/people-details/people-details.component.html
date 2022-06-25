@@ -1,0 +1,36 @@
+<mat-card *ngIf="people" class="people-detail-card">
+    <mat-card-header>
+        <mat-card-title>{{people.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <hr>
+        <p>
+            Height: {{people.height}}
+        </p>
+        <hr>
+        <p>
+            Mass: {{people.mass}}
+        </p>
+        <hr>
+        <p>
+            Hair Color: {{people.hair_color}}
+        </p>
+        <hr>
+        <p>
+            Skin Color: {{people.skin_color}}
+        </p>
+        <hr>
+        <p>
+            Eye Color: {{people.eye_color}}
+        </p>
+        <hr>
+        <p>
+            Birth Year: {{people.birth_year}}
+        </p>
+        <hr>
+        <p>
+            Gender: {{people.gender}}
+        </p>
+        <hr>
+    </mat-card-content>
+</mat-card>
